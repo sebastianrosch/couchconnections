@@ -1,4 +1,28 @@
-<div class="container" *ngIf="auth.auth0Client$ | async">
-  <app-hero></app-hero>
-  <app-home-content></app-home-content>
+<div class="bg">
+  <div class="container text-center">
+
+    <!-- Title -->
+    <div class="">
+      <h1>Zusammen allein Zuhause</h1>
+      <h2></h2>
+    </div>
+
+    <!-- Call to action -->
+    <div>
+      <div class="btn">
+        Session Hosten
+      </div>
+    </div>
+
+    <!-- Arrow -->
+    <div>
+      <div class="btn-icn">
+        <i class="material-icons">arrow_downward</i>
+      </div>
+    </div>
+
+    <div class="cal">
+      <app-calendar></app-calendar>
+    </div>
+  </div>
 </div>

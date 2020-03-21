@@ -1,0 +1,19 @@
+
+<!-- Calendar wrapper -->
+<div class="cal">
+    <!-- Navigation -->
+    <div class="nav-btn back"></div>
+    <div class="nav-btn forward"></div>
+
+    <!-- Days -->
+    <div class="day" *ngFor="let day of days">
+        <div class="day-title">
+            {{ day | date:'EEEE' }}
+        </div>
+        <!-- Sessions -->
+        <div class="session" *ngFor="let session of sessions | sessionsOnDay:day">
+            {{ session.name }}
+        </div>
+
+    </div>
+</div>

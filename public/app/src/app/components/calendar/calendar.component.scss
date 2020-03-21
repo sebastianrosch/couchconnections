@@ -1,0 +1,34 @@
+
+
+.cal {
+    padding: 10px;
+    border-radius: 30px;
+    box-shadow: 0 3px 5px rgba(51, 58, 63, 0.5), 0 0px 8px rgba(51, 58, 63, 0.5);
+    background: white;
+    height: 600px;
+    width: calc(100% - 100px);
+    margin: 0px auto;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    .day {
+        flex: 1;
+        text-align: center;
+
+        .day-title {
+            color: #333A3D;
+            margin-bottom: 15px;
+        }
+
+        .session {
+            border-radius: 10px;
+            background: #9FBFB5;
+        }
+    }
+
+    .nav-btn {
+
+    }
+}
