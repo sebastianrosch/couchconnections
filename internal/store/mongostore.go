@@ -88,7 +88,7 @@ func (s *MongoStore) CreateEvent(topic, description string) (*Event, error) {
 		Description: description,
 		Start:       time.Now(),
 	}
-	err := s.events.Insert()
+	err := s.events.Insert(event)
 
 	return event, err
 }

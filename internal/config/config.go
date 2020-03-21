@@ -19,8 +19,9 @@ type Settings struct {
 	// LogMode sets the log mode. Valid values are "auto", "dev", or "prod" (Default: "auto").
 	LogMode         string `envconfig:"LOG_MODE" default:"auto"`
 	Host            string `envconfig:"HOST" default:""`
-	Port            string `envconfig:"PORT" default:"8923"`
-	HealthCheckPort string `envconfig:"HEALTHCHECK_PORT" default:"8924"`
+	HTTPPort        string `envconfig:"HTTP_PORT" default:"8923"`
+	GRPCPort        string `envconfig:"GRPC_PORT" default:"8924"`
+	HealthCheckPort string `envconfig:"HEALTHCHECK_PORT" default:"8925"`
 
 	DatabaseURI      string `envconfig:"MONGO_URI" default:"mongodb://localhost:27017"`
 	DatabaseName     string `envconfig:"MONGO_DATABASE_NAME" default:"livingroom"`
@@ -31,6 +32,9 @@ type Settings struct {
 	Auth0ClientSecret string `envconfig:"AUTH0_CLIENT_SECRET"`
 	Auth0CallbackURL  string `envconfig:"AUTH0_CALLBACK_URL"`
 	Auth0Domain       string `envconfig:"AUTH0_DOMAIN"`
+
+	AuthJwksURL          string `envconfig:"AUTH_JWKS_CONFIG" default:"https://livingroompresentation.eu.auth0.com/.well-known/jwks.json"`
+	AuthUserInfoEndpoint string `envconfig:"AUTH_USER_INFO_ENDPOINT" default:"https://livingroompresentation.eu.auth0.com/userinfo"`
 }
 
 // Init parses configuration from the environment. This should be called only once per application startup (typically in Main)

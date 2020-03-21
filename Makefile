@@ -44,16 +44,6 @@ docker-run: ## runs the docker image
 	docker run --rm -i -p $(PORT):$(PORT) \
     $(CONTAINER):latest
 
-.PHONY: docker-test
-docker-test: ## runs all tests in docker
-	docker build \
-		--force-rm \
-		--build-arg GITHUB_TOKEN=$(GITHUB_TOKEN) \
-		--build-arg PLATFORM_CLI_REFRESH_TOKEN=$(PLATFORM_CLI_REFRESH_TOKEN) \
-		-f test.Dockerfile \
-		-t $(CONTAINER):latest \
-		.
-
 .PHONY: run
 run: ## runs the api
 	@HOST=localhost go run -ldflags "$(CTIMEVAR)" ./$(ENTRYPOINT_API)
@@ -80,15 +70,13 @@ swagger-check: ## validates the swagger spec for syntax
 test: ## runs the unit tests
 	gotestsum --no-summary=output,skipped --format short-with-failures -- \
 	-tags="unit" \
-	-ldflags "-X github.com/auth0/platform-interface/pkg/build-info.Version=0.0.1 -X github.com/auth0/platform-interface/pkg/build-info.Branch=local -X github.com/auth0/platform-interface/pkg/build-info.Revision=local -X github.com/auth0/platform-interface/pkg/build-info.BuildDate=`date -u +%Y%m%d.%H%M%S` -X github.com/auth0/platform-interface/pkg/build-info.BuildUser=`whoami`" \
+	-ldflags "-X github.com/sebastianrosch/livingroompresentations/pkg/build-info.Version=0.0.1 -X github.com/sebastianrosch/livingroompresentations/pkg/build-info.Branch=local -X github.com/sebastianrosch/livingroompresentations/pkg/build-info.Revision=local -X github.com/sebastianrosch/livingroompresentations/pkg/build-info.BuildDate=`date -u +%Y%m%d.%H%M%S` -X github.com/sebastianrosch/livingroompresentations/pkg/build-info.BuildUser=`whoami`" \
 	-cover -coverprofile cover.out -covermode=count ./...
 
 .PHONY: clean
 clean:  ## cleans up any build binaries or packages
 	find . -name '*-packr.go' -type f -exec rm "{}" \;
 	find . -name 'packrd' -type d -empty -delete
-	rm -f platform-api
-	rm -f platform-cli
 	rm -rf bin
 
 .PHONY: install-tools
