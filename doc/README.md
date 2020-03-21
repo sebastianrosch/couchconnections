@@ -48,7 +48,7 @@ The API version.
 <a name="v1.LivingRoom"></a>
 
 ### LivingRoom
-API exposes commands to interact with the platform.
+LivingRoom exposes commands to interact with the data.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|

@@ -86,7 +86,7 @@ message Version {
     };
 }
 
-// API exposes commands to interact with the platform.
+// LivingRoom exposes commands to interact with the data.
 service LivingRoom {
 
     // ------------------
