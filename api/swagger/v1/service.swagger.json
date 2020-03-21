@@ -1,0 +1,93 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Living Room API",
+    "version": "1.0",
+    "contact": {
+      "name": "livingroom-api",
+      "url": "https://github.com/sebastianrosch/livingroompresentations"
+    }
+  },
+  "basePath": "/api",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/version": {
+      "get": {
+        "summary": "API Version",
+        "description": "Returns the API version information.",
+        "operationId": "GetVersion",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Version"
+            }
+          },
+          "401": {
+            "description": "Returned when the resource requires authentication and no authentication information were provided.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "503": {
+            "description": "Returned when the resource is temporarily unavailable.",
+            "schema": {}
+          }
+        },
+        "tags": [
+          "Internal"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "v1Version": {
+      "type": "object",
+      "example": {
+        "version": "0.0.1",
+        "branch": "master",
+        "revision": "0c3df56"
+      },
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "The build version of the API"
+        },
+        "branch": {
+          "type": "string",
+          "description": "The build branch of the API"
+        },
+        "revision": {
+          "type": "string",
+          "description": "The build revision of the API"
+        }
+      },
+      "description": "The API version information",
+      "title": "API version"
+    }
+  },
+  "securityDefinitions": {
+    "BasicAuth": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "BasicAuth": []
+    }
+  ]
+}

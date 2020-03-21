@@ -1,0 +1,108 @@
+syntax = "proto3";
+package v1;
+option go_package = "v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+    info: {
+		title: "Living Room API";
+		version: "1.0";
+		contact: {
+			name: "livingroom-api";
+			url: "https://github.com/sebastianrosch/livingroompresentations";
+        };
+    };
+    base_path: "/api";
+	schemes: HTTP;
+	schemes: HTTPS;
+    consumes: "application/json";
+    produces: "application/json";
+    responses: {
+		key: "404";
+		value: {
+			description: "Returned when the resource does not exist.";
+			schema: {
+				json_schema: {
+					type: STRING;
+				}
+			}
+		}
+    };
+    responses: {
+        key: "503";
+        value: {
+            description: "Returned when the resource is temporarily unavailable.";
+        }
+    };
+    responses: {
+        key: "401";
+        value: {
+            description: "Returned when the resource requires authentication and no authentication information were provided.";
+        }
+    };
+	security_definitions: {
+		security: {
+			key: "BasicAuth";
+			value: {
+				type: TYPE_BASIC;
+			}
+        }
+    };
+
+	security: {
+		security_requirement: {
+			key: "BasicAuth";
+			value: {};
+        }
+    };
+};
+
+// The API version.
+message Version {
+    // The build version.
+    string version = 1 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {
+        description: "The build version of the API"
+    }];
+    // The build branch.
+    string branch = 2 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {
+        description: "The build branch of the API"
+    }]; 
+    // The git revision.
+    string revision = 3 [(grpc.gateway.protoc_gen_swagger.options.openapiv2_field) = {
+        description: "The build revision of the API"
+    }];
+
+    option (grpc.gateway.protoc_gen_swagger.options.openapiv2_schema) = {
+        json_schema: {
+            title: "API version";
+			description: "The API version information"
+        }
+        example: {
+            value: '{ "version": "0.0.1", "branch": "master", "revision": "0c3df56" }'
+        }
+    };
+}
+
+// API exposes commands to interact with the platform.
+service LivingRoom {
+
+    // ------------------
+    // Utility endpoints.
+    // ------------------
+
+    // GetVersion returns the API version.
+    rpc GetVersion(google.protobuf.Empty) returns (Version) {
+        option (google.api.http) = {
+            get: "/version"
+        };
+
+        option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+            description: "Returns the API version information.";
+            summary: "API Version";
+            tags: "Internal";
+        };
+    }
+}
