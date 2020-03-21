@@ -11,9 +11,17 @@
             {{ day | date:'EEEE' }}
         </div>
         <!-- Sessions -->
-        <div class="session" *ngFor="let session of sessions | sessionsOnDay:day">
+        <div class="session" *ngFor="let session of sessions | sessionsOnDay:day"
+             [style.top.px]="getTopPosition(session)"
+             [style.height.px]="getHeight(session)"
+             (click)="openSessionDetails(session)">
             {{ session.name }}
         </div>
 
     </div>
 </div>
+
+<!-- Details modal -->
+<app-modal #modal>
+    {{ selectedSession?.name }}
+</app-modal>

@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     right: 0;
-    
+
     .nav {
         display: flex;
         flex-direction: row;
@@ -11,6 +11,7 @@
 
         .logo {
             flex: 1;
+            padding: 10px;
         }
         .menu-item {
             width: 120px;

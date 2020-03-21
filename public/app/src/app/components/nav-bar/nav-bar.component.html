@@ -1,14 +1,16 @@
 <div class="nav">
-  <div class="logo"></div>
+  <div class="logo">
+    <img src="/assets/images/logos/logo-text.svg" height="30px">
+  </div>
 
   <div class="menu-item"></div>
   <div class="menu-item" *ngIf="auth.userProfile$ | async as profile">
     <a routerLink="/profile"><i class="icn">person</i> Profile</a>
   </div>
   <div class="menu-item" *ngIf="auth.loggedIn">
-    <a (click)="auth.logout()">Logout</a>
+    <a href="" (click)="auth.logout()">Logout</a>
   </div>
   <div class="menu-item" *ngIf="auth.loggedIn === false">
-    <a (click)="auth.login()">Login</a>
+    <a href="" (click)="auth.login()">Login</a>
   </div>
 </div>

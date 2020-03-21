@@ -1,28 +1,61 @@
+<!-- Background -->
 <div class="bg">
-  <div class="container text-center">
+</div>
 
-    <!-- Title -->
-    <div class="">
-      <h1>Zusammen allein Zuhause</h1>
-      <h2></h2>
-    </div>
+<div class="container text-center">
 
-    <!-- Call to action -->
-    <div>
-      <div class="btn">
-        Session Hosten
-      </div>
-    </div>
+  <!-- Title -->
+  <div class="title">
+    <img src="/assets/images/logos/logo.svg" height="60px">
+    <h1>Zusammen allein Zuhause</h1>
+    <h2>Treffe dich auf der Couch</h2>
+  </div>
 
-    <!-- Arrow -->
-    <div>
-      <div class="btn-icn">
-        <i class="material-icons">arrow_downward</i>
-      </div>
-    </div>
-
-    <div class="cal">
-      <app-calendar></app-calendar>
+  <!-- Call to action -->
+  <div class="ctc">
+    <div class="btn" (click)="modal.show()">
+      Session Hosten
     </div>
   </div>
+
+  <!-- Arrow -->
+  <div class="ctc2">
+    <div class="btn-icn" (click)="scrollToCalendar()">
+      <i class="material-icons">arrow_downward</i>
+    </div>
+  </div>
+
+  <div class="cal">
+    <app-calendar></app-calendar>
+  </div>
 </div>
+
+
+<!-- New session modal -->
+<app-modal #modal>
+  <div>
+    <h2>Neue Session</h2>
+
+    <!--  Topic -->
+    <div class="label">Gib deiner Session einen Namen</div>
+    <input type="text"/>
+
+    <!-- Description -->
+    <div class="label">Was genau stellst du dir vor?</div>
+    <textarea resize="false" rows="6"></textarea>
+
+    <!-- Date & Time -->
+    <div class="label">Datum und Uhrzeit</div>
+    <div class="flex">
+      <input type="date" class="flex-2 m-r"/>
+      <input type="time" class="flex-1 m-r"/>
+      <input type="time" class="flex-1"/>
+    </div>
+
+    <!-- Terms & conditions -->
+    <!-- Language -->
+    <div class="m">
+      <div class="btn w-100">Veröffentlichen</div>
+    </div>
+  </div>
+</app-modal>

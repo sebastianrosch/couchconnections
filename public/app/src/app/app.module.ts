@@ -9,6 +9,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { SessionsOnDayPipe } from './pipes/sessions-on-day.pipe';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SessionsOnDayPipe } from './pipes/sessions-on-day.pipe';
     NavBarComponent,
     FooterComponent,
     CalendarComponent,
-    SessionsOnDayPipe
+    SessionsOnDayPipe,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

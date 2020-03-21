@@ -13,4 +13,15 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Scroll button event handler
+   */
+  scrollToCalendar(): void {
+    window.scrollBy({
+      top: 600,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
 }
