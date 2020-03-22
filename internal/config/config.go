@@ -19,7 +19,7 @@ type Settings struct {
 	// LogMode sets the log mode. Valid values are "auto", "dev", or "prod" (Default: "auto").
 	LogMode         string `envconfig:"LOG_MODE" default:"auto"`
 	Host            string `envconfig:"HOST" default:""`
-	HTTPPort        string `envconfig:"HTTP_PORT" default:"8923"`
+	HTTPPort        string `envconfig:"PORT" default:"8923"`
 	GRPCPort        string `envconfig:"GRPC_PORT" default:"8924"`
 	HealthCheckPort string `envconfig:"HEALTHCHECK_PORT" default:"8925"`
 

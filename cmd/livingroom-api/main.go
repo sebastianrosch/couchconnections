@@ -18,10 +18,7 @@ import (
 	"github.com/prometheus/common/version"
 	"github.com/sebastianrosch/livingroompresentations/internal/config"
 	"github.com/sebastianrosch/livingroompresentations/internal/grpc"
-	"github.com/sebastianrosch/livingroompresentations/internal/rest"
-	"github.com/sebastianrosch/livingroompresentations/internal/service"
 	servicev1 "github.com/sebastianrosch/livingroompresentations/internal/service/v1"
-	"github.com/sebastianrosch/livingroompresentations/internal/store"
 	"github.com/sebastianrosch/livingroompresentations/pkg/auth"
 	"github.com/sebastianrosch/livingroompresentations/pkg/log"
 )
@@ -35,39 +32,41 @@ func main() {
 	// Get the config.
 	var httpPort, grpcPort, host string = config.Get().HTTPPort, config.Get().GRPCPort, config.Get().Host
 
-	s, err := store.NewMongoStore(
-		config.Get().DatabaseURI,
-		config.Get().DatabaseName,
-		config.Get().DatabaseUsername,
-		config.Get().DatabasePassword,
-	)
-	if err != nil {
-		logger.Error(err, "couldn't create MongoDB store")
-		os.Exit(2)
-	}
+	// logger.Info(fmt.Sprintf("Connecting to MongoDB at %s", config.Get().DatabaseURI))
+	// s, err := store.NewMongoStore(
+	// 	config.Get().DatabaseURI,
+	// 	config.Get().DatabaseName,
+	// 	config.Get().DatabaseUsername,
+	// 	config.Get().DatabasePassword,
+	// )
+	// if err != nil {
+	// 	logger.Error(err, "couldn't create MongoDB store")
+	// 	os.Exit(2)
+	// }
 
+	logger.Info(fmt.Sprintf("Connected to MongoDB at %s", config.Get().DatabaseURI))
 	// Setup the context.
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	s.CreateEvent("How viruses spread", "Epidemologist talks about how viruses spread")
+	// s.CreateEvent("How viruses spread", "Epidemologist talks about how viruses spread")
 
-	events, _ := s.GetAllEvents()
-	for _, event := range events {
-		fmt.Print(event)
-	}
+	// events, _ := s.GetAllEvents()
+	// for _, event := range events {
+	// 	fmt.Print(event)
+	// }
 
-	httpClient := getHTTPClient()
+	// httpClient := getHTTPClient()
 
-	tokenDecoder := auth.NewJWTTokenDecoder(config.Get().AuthJwksURL)
-	userInfoRetriever := auth.NewUserInfoRetriever(config.Get().AuthUserInfoEndpoint, httpClient)
-	metadata := service.NewMetadata()
-	whitelist := []string{"/v1.LivingRonom/GetVersion"}
-	authContext := &auth.BearerTokenContext{}
-	authenticator := auth.NewAuthenticator(logger, whitelist, tokenDecoder, userInfoRetriever, metadata, authContext)
+	// tokenDecoder := auth.NewJWTTokenDecoder(config.Get().AuthJwksURL)
+	// userInfoRetriever := auth.NewUserInfoRetriever(config.Get().AuthUserInfoEndpoint, httpClient)
+	// metadata := service.NewMetadata()
+	// whitelist := []string{"/v1.LivingRoom/GetVersion"}
+	// authContext := &auth.BearerTokenContext{}
+	// authenticator := auth.NewAuthenticator(logger, whitelist, tokenDecoder, userInfoRetriever, metadata, authContext)
 
 	// Configure the service implementation.
-	v1Service := &servicev1.LivingRoomService{}
+	// v1Service := &servicev1.LivingRoomService{}
 
 	// Set up a router to host all handlers on the same port.
 	router := setupRouter(ctx, logger, host, grpcPort)
@@ -76,10 +75,10 @@ func main() {
 	httpServer := startHTTPServer(logger, host, httpPort, router)
 
 	// Start the gRPC server.
-	grpcServer := startgRPCServer(ctx, logger, host, grpcPort, v1Service, authenticator)
-	if grpcServer == nil {
-		return
-	}
+	// grpcServer := startgRPCServer(ctx, logger, host, grpcPort, v1Service, authenticator)
+	// if grpcServer == nil {
+	// 	return
+	// }
 
 	// Setting up signal capturing.
 	stop := make(chan os.Signal, 1)
@@ -92,7 +91,7 @@ func main() {
 	if err := httpServer.Shutdown(ctx); err != nil {
 		logger.Error(err, "failed shutting down server")
 	}
-	grpcServer.GracefulStop()
+	// grpcServer.GracefulStop()
 
 	// Done.
 	logger.Info("shutting down")
@@ -103,6 +102,7 @@ func setupRouter(
 	logger logr.Logger,
 	host string,
 	grpcPort string) *mux.Router {
+	app := packr.New("app", "../../public/app/dist/login-demo")
 	swaggerv1 := packr.New("swagger", "../../api/swagger/v1")
 	swaggerui := packr.New("swaggerui", "../../swaggerui")
 	schemasv1 := packr.New("schemas", "../../api/schema/v1")
@@ -114,8 +114,8 @@ func setupRouter(
 
 	router := mux.NewRouter()
 	router.PathPrefix("/docs/").Handler(docsRouter)
-	router.PathPrefix("/api/").Handler(http.StripPrefix("/api", rest.GetHandler(ctx, logger, host, grpcPort)))
-	// router.PathPrefix("/").Handler(twirp.GetHandler(ctx, logger, v1Service, authenticator))
+	// router.PathPrefix("/api/").Handler(http.StripPrefix("/api", rest.GetHandler(ctx, logger, host, grpcPort)))
+	router.PathPrefix("/").Handler(http.FileServer(app))
 
 	return router
 }
