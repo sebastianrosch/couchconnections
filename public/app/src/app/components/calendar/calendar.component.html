@@ -23,5 +23,11 @@
 
 <!-- Details modal -->
 <app-modal #modal>
-    {{ selectedSession?.name }}
+    <h2>{{ selectedSession?.name }}</h2>
+    <p>
+        {{ selectedSession?.description }}
+    </p>
+    <div class="m">
+        <div class="btn w-100" (click)="modal.hide()">Teilnehmen</div>
+    </div>
 </app-modal>

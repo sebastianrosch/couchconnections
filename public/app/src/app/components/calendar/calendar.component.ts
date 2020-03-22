@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { addDays, startOfWeek } from 'date-fns';
 import { Session } from 'src/app/models/session.model';
 import { ModalComponent } from '../modal/modal.component';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-calendar',
@@ -13,22 +14,9 @@ export class CalendarComponent implements OnInit {
 
   days: Date[] = [];
   selectedSession: Session;
-  sessions: Session[] = [
-    {
-      day: new Date(),
-      name: 'Schwimmen'
-    },
-    {
-      day: addDays(new Date(), -2),
-      name: 'Lachen'
-    },
-    {
-      day: addDays(new Date(), -4),
-      name: 'Tanzen'
-    }
-  ];
+  sessions: Session[] = [];
 
-  constructor() { }
+  constructor(private sessionService: SessionService) { }
 
   ngOnInit() {
     const today = new Date();
@@ -38,22 +26,34 @@ export class CalendarComponent implements OnInit {
     for (let i = 0; i < 7; i++) {
       this.days.push(addDays(monday, i));
     }
+
+    // gets the sessions
+    this.sessionService.data$.subscribe(sessions => {
+      this.sessions = [...sessions];
+    });
   }
 
   /**
    * Calculates the top position, based on the time of the event
    */
   getTopPosition(session: Session): number {
-    // TODO: fake data
-    return Math.random() * 560;
+    const start = Number(session.startTime.replace(':', ''));
+
+    return (start - 1200) * 0.5;
   }
 
   /**
    * Calculates the height, based on the duration of the event
    */
   getHeight(session: Session): number {
-    // TODO: fake data
-    return Math.random() * 160 + 40;
+
+    const start = Number(session.startTime.replace(':', ''));
+    const end = Number(session.endTime.replace(':', ''));
+
+    const duration = end - start;
+    return duration * 0.8;
+
+
   }
 
   /**

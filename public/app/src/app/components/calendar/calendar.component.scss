@@ -27,13 +27,17 @@
             border-radius: 10px;
             background: #9FBFB5;
             position: absolute;
-            width: 100%;
+            width: calc(100% - 1px);
             top: 0;
             text-align: left;
             padding: 5px;
             box-sizing: border-box;
             cursor: pointer;
             transition: 50ms ease-in;
+            font-size: 13px;
+            line-height: 1.5em;
+            text-overflow: ellipsis;
+            overflow: hidden;
 
             &:hover {
                 box-shadow: 0 2px 3px rgba(51, 58, 63, 0.5), 0 1px 5px rgba(51, 58, 63, 0.5);
