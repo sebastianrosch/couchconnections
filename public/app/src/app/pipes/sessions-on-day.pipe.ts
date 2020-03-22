@@ -9,7 +9,7 @@ export class SessionsOnDayPipe implements PipeTransform {
 
   transform(array: Session[], day: Date): Session[] {
 
-    return array.filter(session => isSameDay(session.day, day));
+    return array.filter(session => isSameDay(session.date, day));
   }
 
 }

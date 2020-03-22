@@ -8,7 +8,7 @@
   <div class="title">
     <img src="/assets/images/logos/logo.svg" height="60px">
     <h1>Zusammen allein Zuhause</h1>
-    <h2>Treffe dich auf der Couch</h2>
+    <h2>Virtuelles Get-Together - 8 Personen & 1 Thema</h2>
   </div>
 
   <!-- Call to action -->
@@ -28,6 +28,15 @@
   <div class="cal">
     <app-calendar></app-calendar>
   </div>
+
+  <div class="description">
+    <p>
+      Wir rücken zusammen. Auf unserem virtuellen Sofa machen wir Platz für alle, die auch in Zeiten von Corona nicht auf Austausch und Anregung verzichten sollten - also für alle! Dieses Gefühl, wenn man Begegnungen hat, Gespräche führt und Menschen kennenlernt, die einen herausfordern, inspirieren und weiter bringen - dieses Gefühl lässt sich nicht ersetzen. Aber es lässt sich übersetzen. Vom Wohnzimmer, der Bar, dem Café, von der Face-to-Face Begegnung in den virtuellen Raum.
+    </p>
+    <p>
+      Hier könnt ihr euer Wissen in Kurz-Präsentationen und Fragerunden teilen und zusammen in Gruppen mit maximal 8 Gästen tiefer einsteigen. Und wenn die Gespräche nicht enden sollen, dann bleibt doch einfach in Kontakt!
+    </p>
+  </div>
 </div>
 
 
@@ -35,27 +44,28 @@
 <app-modal #modal>
   <div>
     <h2>Neue Session</h2>
-
+    <form [formGroup]="sessionForm">
     <!--  Topic -->
     <div class="label">Gib deiner Session einen Namen</div>
-    <input type="text"/>
+    <input type="text" formControlName="name"/>
 
-    <!-- Description -->
-    <div class="label">Was genau stellst du dir vor?</div>
-    <textarea resize="false" rows="6"></textarea>
+      <!-- Description -->
+      <div class="label">Was genau stellst du dir vor?</div>
+      <textarea formControlName="description" resize="false" rows="6"></textarea>
 
-    <!-- Date & Time -->
-    <div class="label">Datum und Uhrzeit</div>
-    <div class="flex">
-      <input type="date" class="flex-2 m-r"/>
-      <input type="time" class="flex-1 m-r"/>
-      <input type="time" class="flex-1"/>
-    </div>
+      <!-- Date & Time -->
+      <div class="label">Datum und Uhrzeit</div>
+      <div class="flex">
+        <input type="date" formControlName="date" class="flex-2 m-r"/>
+        <input type="time" formControlName="startTime" class="flex-1 m-r"/>
+        <input type="time" formControlName="endTime" class="flex-1"/>
+      </div>
 
-    <!-- Terms & conditions -->
-    <!-- Language -->
-    <div class="m">
-      <div class="btn w-100">Veröffentlichen</div>
-    </div>
+      <!-- Terms & conditions -->
+      <!-- Language -->
+      <div class="m">
+        <div class="btn w-100" (click)="addNewSession()">Veröffentlichen</div>
+      </div>
+    </form>
   </div>
 </app-modal>

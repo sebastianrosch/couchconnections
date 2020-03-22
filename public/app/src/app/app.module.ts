@@ -10,6 +10,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { SessionsOnDayPipe } from './pipes/sessions-on-day.pipe';
 import { ModalComponent } from './components/modal/modal.component';
+import { SessionService } from './services/session.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,9 +26,13 @@ import { ModalComponent } from './components/modal/modal.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    SessionService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
