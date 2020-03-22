@@ -1,9 +1,16 @@
-FROM golang:1.14
+ARG GOLANG_VERSION=1.13.4
 
-RUN mkdir /tmp/app
-ADD . /tmp/app
-WORKDIR /tmp/app
+FROM golang:$GOLANG_VERSION as builder
+ARG BUILD_VERSION=0.0.1
 
-RUN go build -o main .
-CMD ["/tmp/app/main"]
-EXPOSE 3000
+WORKDIR /go/src/github.com/sebastianrosch/livingroompresentations
+COPY . .
+
+RUN make build VERSION=$BUILD_VERSION
+
+FROM debian
+
+WORKDIR /app
+COPY --from=builder /go/src/github.com/sebastianrosch/livingroompresentations/livingroom-api /livingroom-api
+
+ENTRYPOINT ["/livingroom-api"]
