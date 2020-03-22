@@ -5,7 +5,7 @@
 
   <div class="menu-item"></div>
   <div class="menu-item" *ngIf="auth.userProfile$ | async as profile">
-    <a routerLink="/profile"><i class="icn">person</i> Profile</a>
+    <a routerLink="/profile"><i class="icn"></i> Profile</a>
   </div>
   <div class="menu-item" *ngIf="auth.loggedIn">
     <a href="" (click)="auth.logout()">Logout</a>
