@@ -5,7 +5,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/sebastianrosch/livingroompresentations/pkg/auth/internal"
+	"github.com/sebastianrosch/couchconnections/pkg/auth/internal"
 )
 
 // Utils interface

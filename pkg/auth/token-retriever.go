@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/sebastianrosch/livingroompresentations/pkg/auth/internal"
+	"github.com/sebastianrosch/couchconnections/pkg/auth/internal"
 )
 
 type tokenEndpointResponse struct {

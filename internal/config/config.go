@@ -24,7 +24,7 @@ type Settings struct {
 	HealthCheckPort string `envconfig:"HEALTHCHECK_PORT" default:"8925"`
 
 	DatabaseURI      string `envconfig:"MONGO_URI" default:"mongodb://localhost:27017"`
-	DatabaseName     string `envconfig:"MONGO_DATABASE_NAME" default:"livingroom"`
+	DatabaseName     string `envconfig:"MONGO_DATABASE_NAME" default:"couchconnections"`
 	DatabaseUsername string `envconfig:"MONGO_USERNAME"`
 	DatabasePassword string `envconfig:"MONGO_PASSWORD"`
 

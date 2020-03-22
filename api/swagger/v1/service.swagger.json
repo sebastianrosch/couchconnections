@@ -1,11 +1,11 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Living Room API",
+    "title": "Couch Connections API",
     "version": "1.0",
     "contact": {
-      "name": "livingroom-api",
-      "url": "https://github.com/sebastianrosch/livingroompresentations"
+      "name": "couchconnections-api",
+      "url": "https://github.com/sebastianrosch/couchconnections"
     }
   },
   "basePath": "/api",

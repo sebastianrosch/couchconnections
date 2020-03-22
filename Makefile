@@ -1,13 +1,13 @@
 .DEFAULT_GOAL := help
 
-ENTRYPOINT_API = cmd/livingroom-api
-CONTAINER ?= livingroom-api
+ENTRYPOINT_API = cmd/couchconnections-api
+CONTAINER ?= couchconnections-api
 PORT ?= 8925
 GOLANGCI_LINT_VERSION = v1.21.0
 PACKR_VERSION := 2.2.0
 
 # Setup name variables for the package/tool
-NAME := livingroompresentations
+NAME := couchconnections
 PKG := github.com/sebastianrosch/$(NAME)
 BUILDINFOPKG := $(PKG)/pkg/build-info
 ALL_PKGS := $(shell go list ./...)
@@ -70,7 +70,7 @@ swagger-check: ## validates the swagger spec for syntax
 test: ## runs the unit tests
 	gotestsum --no-summary=output,skipped --format short-with-failures -- \
 	-tags="unit" \
-	-ldflags "-X github.com/sebastianrosch/livingroompresentations/pkg/build-info.Version=0.0.1 -X github.com/sebastianrosch/livingroompresentations/pkg/build-info.Branch=local -X github.com/sebastianrosch/livingroompresentations/pkg/build-info.Revision=local -X github.com/sebastianrosch/livingroompresentations/pkg/build-info.BuildDate=`date -u +%Y%m%d.%H%M%S` -X github.com/sebastianrosch/livingroompresentations/pkg/build-info.BuildUser=`whoami`" \
+	-ldflags "-X github.com/sebastianrosch/couchconnections/pkg/build-info.Version=0.0.1 -X github.com/sebastianrosch/couchconnections/pkg/build-info.Branch=local -X github.com/sebastianrosch/couchconnections/pkg/build-info.Revision=local -X github.com/sebastianrosch/couchconnections/pkg/build-info.BuildDate=`date -u +%Y%m%d.%H%M%S` -X github.com/sebastianrosch/couchconnections/pkg/build-info.BuildUser=`whoami`" \
 	-cover -coverprofile cover.out -covermode=count ./...
 
 .PHONY: clean
@@ -104,7 +104,7 @@ bin/packr2:
 
 .PHONY: generate
 generate: ## generates the source code from the protobuf file
-	cd rpc/livingroom-api && protoc \
+	cd rpc/couchconnections-api && protoc \
 		-I=. \
 		-I=/usr/local/include \
 		-I=$(GOPATH)/src \
@@ -119,7 +119,7 @@ generate: ## generates the source code from the protobuf file
 		--jsonschema_out=disallow_additional_properties:../../api/schema/v1 \
 		v1/service.proto && \
 	rm -f v1/service.pb.mc.go && \
-	mockgen -source v1/service.pb.go -mock_names LivingRoomAPI=MockLivingRoomAPI -destination v1/service.pb.mc.go -package v1
+	mockgen -source v1/service.pb.go -mock_names CouchConnectionsAPI=MockCouchConnectionsAPI -destination v1/service.pb.mc.go -package v1
 
 .PHONY: help
 help:

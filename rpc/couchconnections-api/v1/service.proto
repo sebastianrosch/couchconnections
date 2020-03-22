@@ -8,11 +8,11 @@ import "protoc-gen-swagger/options/annotations.proto";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
     info: {
-		title: "Living Room API";
+		title: "Couch Connections API";
 		version: "1.0";
 		contact: {
-			name: "livingroom-api";
-			url: "https://github.com/sebastianrosch/livingroompresentations";
+			name: "couchconnections-api";
+			url: "https://github.com/sebastianrosch/couchconnections";
         };
     };
     base_path: "/api";
@@ -86,8 +86,8 @@ message Version {
     };
 }
 
-// LivingRoom exposes commands to interact with the data.
-service LivingRoom {
+// CouchConnections exposes commands to interact with the data.
+service CouchConnections {
 
     // ------------------
     // Utility endpoints.

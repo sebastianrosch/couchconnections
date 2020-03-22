@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/sebastianrosch/livingroompresentations/pkg/auth/internal"
+	"github.com/sebastianrosch/couchconnections/pkg/auth/internal"
 )
 
 // UserInfoAuthorizationError represents an authorization error that occurred while

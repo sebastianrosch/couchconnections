@@ -7,7 +7,7 @@ import (
 	"golang.org/x/oauth2"
 
 	oidc "github.com/coreos/go-oidc"
-	"github.com/sebastianrosch/livingroompresentations/internal/config"
+	"github.com/sebastianrosch/couchconnections/internal/config"
 )
 
 type Authenticator struct {

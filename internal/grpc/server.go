@@ -4,13 +4,13 @@ import (
 	"context"
 
 	"github.com/go-logr/logr"
-	"github.com/sebastianrosch/livingroompresentations/internal/service"
+	"github.com/sebastianrosch/couchconnections/internal/service"
 	"github.com/twitchtv/twirp"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	v1 "github.com/sebastianrosch/livingroompresentations/rpc/livingroom-api/v1"
+	v1 "github.com/sebastianrosch/couchconnections/rpc/couchconnections-api/v1"
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 )
@@ -25,14 +25,14 @@ type Authenticator interface {
 func GetServer(
 	ctx context.Context,
 	logger logr.Logger,
-	v1Service v1.LivingRoomServer,
+	v1Service v1.CouchConnectionsServer,
 	authenticator Authenticator) *grpc.Server {
 	authenticatorMiddleware := authenticatorAsUnaryInterceptor(authenticator)
 
 	// Register the gRPC server.
 	middlewares := grpc_middleware.ChainUnaryServer(extractMethodInfoMiddleware, authenticatorMiddleware, convertTwirpError)
 	server := grpc.NewServer(grpc.UnaryInterceptor(middlewares))
-	v1.RegisterLivingRoomServer(server, v1Service)
+	v1.RegisterCouchConnectionsServer(server, v1Service)
 
 	// Return the gRPC server.
 	return server

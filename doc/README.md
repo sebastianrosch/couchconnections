@@ -8,7 +8,7 @@
   
   
   
-    - [LivingRoom](#v1.LivingRoom)
+    - [CouchConnections](#v1.CouchConnections)
   
 
 - [Scalar Value Types](#scalar-value-types)
@@ -45,10 +45,10 @@ The API version.
  
 
 
-<a name="v1.LivingRoom"></a>
+<a name="v1.CouchConnections"></a>
 
-### LivingRoom
-LivingRoom exposes commands to interact with the data.
+### CouchConnections
+CouchConnections exposes commands to interact with the data.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|

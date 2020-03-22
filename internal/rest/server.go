@@ -8,7 +8,7 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"google.golang.org/grpc"
 
-	v1 "github.com/sebastianrosch/livingroompresentations/rpc/livingroom-api/v1"
+	v1 "github.com/sebastianrosch/couchconnections/rpc/couchconnections-api/v1"
 )
 
 // GetHandler returns the HTTP/REST gateway handler.

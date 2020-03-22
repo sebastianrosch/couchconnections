@@ -6,7 +6,7 @@ import (
 
 	"github.com/go-logr/logr"
 
-	"github.com/sebastianrosch/livingroompresentations/internal/service"
+	"github.com/sebastianrosch/couchconnections/internal/service"
 )
 
 // MetadataRetriever interface provides access to the metadata of the current request

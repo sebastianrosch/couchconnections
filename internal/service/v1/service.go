@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/golang/protobuf/ptypes/empty"
-	buildinfo "github.com/sebastianrosch/livingroompresentations/pkg/build-info"
-	v1 "github.com/sebastianrosch/livingroompresentations/rpc/livingroom-api/v1"
+	buildinfo "github.com/sebastianrosch/couchconnections/pkg/build-info"
+	v1 "github.com/sebastianrosch/couchconnections/rpc/couchconnections-api/v1"
 )
 
 type LivingRoomService struct {

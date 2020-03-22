@@ -1,4 +1,4 @@
-module github.com/sebastianrosch/livingroompresentations
+module github.com/sebastianrosch/couchconnections
 
 go 1.13
 
@@ -13,10 +13,8 @@ require (
 	github.com/golang/mock v1.4.3
 	github.com/golang/protobuf v1.3.5
 	github.com/gorilla/mux v1.7.4
-	github.com/gorilla/sessions v1.2.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0
 	github.com/grpc-ecosystem/grpc-gateway v1.14.3
-	github.com/heptiolabs/healthcheck v0.0.0-20180807145615-6ff867650f40 // indirect
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/mattn/go-isatty v0.0.12
 	github.com/mitchellh/mapstructure v1.1.2
@@ -25,10 +23,8 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/pquerna/cachecontrol v0.0.0-20180517163645-1555304b9b35 // indirect
 	github.com/prometheus/common v0.9.1
-	github.com/stretchr/testify v1.5.1 // indirect
 	github.com/twitchtv/twirp v5.10.1+incompatible
 	go.uber.org/zap v1.14.1
-	golang.org/x/crypto v0.0.0-20200320181102-891825fb96df // indirect
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
 	google.golang.org/genproto v0.0.0-20200319113533-08878b785e9c
 	google.golang.org/grpc v1.28.0

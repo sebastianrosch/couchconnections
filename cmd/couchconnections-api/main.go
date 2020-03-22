@@ -16,11 +16,12 @@ import (
 	"github.com/gobuffalo/packr/v2"
 	"github.com/gorilla/mux"
 	"github.com/prometheus/common/version"
-	"github.com/sebastianrosch/livingroompresentations/internal/config"
-	"github.com/sebastianrosch/livingroompresentations/internal/grpc"
-	servicev1 "github.com/sebastianrosch/livingroompresentations/internal/service/v1"
-	"github.com/sebastianrosch/livingroompresentations/pkg/auth"
-	"github.com/sebastianrosch/livingroompresentations/pkg/log"
+	"github.com/sebastianrosch/couchconnections/internal/config"
+	"github.com/sebastianrosch/couchconnections/internal/grpc"
+	servicev1 "github.com/sebastianrosch/couchconnections/internal/service/v1"
+	"github.com/sebastianrosch/couchconnections/internal/store"
+	"github.com/sebastianrosch/couchconnections/pkg/auth"
+	"github.com/sebastianrosch/couchconnections/pkg/log"
 )
 
 func main() {
@@ -32,29 +33,29 @@ func main() {
 	// Get the config.
 	var httpPort, grpcPort, host string = config.Get().HTTPPort, config.Get().GRPCPort, config.Get().Host
 
-	// logger.Info(fmt.Sprintf("Connecting to MongoDB at %s", config.Get().DatabaseURI))
-	// s, err := store.NewMongoStore(
-	// 	config.Get().DatabaseURI,
-	// 	config.Get().DatabaseName,
-	// 	config.Get().DatabaseUsername,
-	// 	config.Get().DatabasePassword,
-	// )
-	// if err != nil {
-	// 	logger.Error(err, "couldn't create MongoDB store")
-	// 	os.Exit(2)
-	// }
+	logger.Info(fmt.Sprintf("Connecting to MongoDB at %s", config.Get().DatabaseURI))
+	s, err := store.NewMongoStore(
+		config.Get().DatabaseURI,
+		config.Get().DatabaseName,
+		config.Get().DatabaseUsername,
+		config.Get().DatabasePassword,
+	)
+	if err != nil {
+		logger.Error(err, "couldn't create MongoDB store")
+		os.Exit(2)
+	}
 
 	logger.Info(fmt.Sprintf("Connected to MongoDB at %s", config.Get().DatabaseURI))
 	// Setup the context.
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	// s.CreateEvent("How viruses spread", "Epidemologist talks about how viruses spread")
+	s.CreateEvent("How viruses spread", "Epidemologist talks about how viruses spread")
 
-	// events, _ := s.GetAllEvents()
-	// for _, event := range events {
-	// 	fmt.Print(event)
-	// }
+	events, _ := s.GetAllEvents()
+	for _, event := range events {
+		fmt.Print(event)
+	}
 
 	// httpClient := getHTTPClient()
 

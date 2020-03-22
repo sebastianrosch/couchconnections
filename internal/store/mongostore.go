@@ -3,10 +3,10 @@ package store
 import (
 	"time"
 
-	"github.com/sebastianrosch/livingroompresentations/internal/db"
+	"github.com/sebastianrosch/couchconnections/internal/db"
 
-	// "github.com/sebastianrosch/livingroompresentations/pkg/strutil"
-	// "github.com/sebastianrosch/livingroompresentations/pkg/types"
+	// "github.com/sebastianrosch/couchconnections/pkg/strutil"
+	// "github.com/sebastianrosch/couchconnections/pkg/types"
 
 	"github.com/globalsign/mgo"
 	"github.com/pkg/errors"

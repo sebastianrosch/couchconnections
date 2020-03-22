@@ -36,7 +36,7 @@ type AccessTokenClaims struct {
 	Exp         int
 	Iat         int
 	Iss         string
-	Permissions []string `mapstructure:"http://livingroom/roles"`
+	Permissions []string `mapstructure:"http://couchconnections/roles"`
 	Scope       string
 	Sub         string
 }
