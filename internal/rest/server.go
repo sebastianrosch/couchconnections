@@ -24,7 +24,7 @@ func GetHandler(ctx context.Context, logger logr.Logger, host, grpcPort string) 
 
 	// Configure the gateway.
 	opts := []grpc.DialOption{grpc.WithInsecure()}
-	if err := v1.RegisterLivingRoomHandlerFromEndpoint(ctx, mux, host+":"+grpcPort, opts); err != nil {
+	if err := v1.RegisterCouchConnectionsHandlerFromEndpoint(ctx, mux, host+":"+grpcPort, opts); err != nil {
 		logger.Error(err, "failed to start REST gateway")
 	}
 

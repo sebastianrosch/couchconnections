@@ -18,6 +18,8 @@ import (
 	"github.com/prometheus/common/version"
 	"github.com/sebastianrosch/couchconnections/internal/config"
 	"github.com/sebastianrosch/couchconnections/internal/grpc"
+	"github.com/sebastianrosch/couchconnections/internal/rest"
+	"github.com/sebastianrosch/couchconnections/internal/service"
 	servicev1 "github.com/sebastianrosch/couchconnections/internal/service/v1"
 	"github.com/sebastianrosch/couchconnections/internal/store"
 	"github.com/sebastianrosch/couchconnections/pkg/auth"
@@ -33,7 +35,6 @@ func main() {
 	// Get the config.
 	var httpPort, grpcPort, host string = config.Get().HTTPPort, config.Get().GRPCPort, config.Get().Host
 
-	logger.Info(fmt.Sprintf("Connecting to MongoDB at %s", config.Get().DatabaseURI))
 	s, err := store.NewMongoStore(
 		config.Get().DatabaseURI,
 		config.Get().DatabaseName,
@@ -45,7 +46,6 @@ func main() {
 		os.Exit(2)
 	}
 
-	logger.Info(fmt.Sprintf("Connected to MongoDB at %s", config.Get().DatabaseURI))
 	// Setup the context.
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -57,17 +57,17 @@ func main() {
 		fmt.Print(event)
 	}
 
-	// httpClient := getHTTPClient()
+	httpClient := getHTTPClient()
 
-	// tokenDecoder := auth.NewJWTTokenDecoder(config.Get().AuthJwksURL)
-	// userInfoRetriever := auth.NewUserInfoRetriever(config.Get().AuthUserInfoEndpoint, httpClient)
-	// metadata := service.NewMetadata()
-	// whitelist := []string{"/v1.LivingRoom/GetVersion"}
-	// authContext := &auth.BearerTokenContext{}
-	// authenticator := auth.NewAuthenticator(logger, whitelist, tokenDecoder, userInfoRetriever, metadata, authContext)
+	tokenDecoder := auth.NewJWTTokenDecoder(config.Get().AuthJwksURL)
+	userInfoRetriever := auth.NewUserInfoRetriever(config.Get().AuthUserInfoEndpoint, httpClient)
+	metadata := service.NewMetadata()
+	whitelist := []string{"/v1.CouchConnections/GetVersion"}
+	authContext := &auth.BearerTokenContext{}
+	authenticator := auth.NewAuthenticator(logger, whitelist, tokenDecoder, userInfoRetriever, metadata, authContext)
 
 	// Configure the service implementation.
-	// v1Service := &servicev1.LivingRoomService{}
+	v1Service := &servicev1.CouchConnectionsService{}
 
 	// Set up a router to host all handlers on the same port.
 	router := setupRouter(ctx, logger, host, grpcPort)
@@ -76,10 +76,10 @@ func main() {
 	httpServer := startHTTPServer(logger, host, httpPort, router)
 
 	// Start the gRPC server.
-	// grpcServer := startgRPCServer(ctx, logger, host, grpcPort, v1Service, authenticator)
-	// if grpcServer == nil {
-	// 	return
-	// }
+	grpcServer := startgRPCServer(ctx, logger, host, grpcPort, v1Service, authenticator)
+	if grpcServer == nil {
+		return
+	}
 
 	// Setting up signal capturing.
 	stop := make(chan os.Signal, 1)
@@ -92,7 +92,7 @@ func main() {
 	if err := httpServer.Shutdown(ctx); err != nil {
 		logger.Error(err, "failed shutting down server")
 	}
-	// grpcServer.GracefulStop()
+	grpcServer.GracefulStop()
 
 	// Done.
 	logger.Info("shutting down")
@@ -115,7 +115,7 @@ func setupRouter(
 
 	router := mux.NewRouter()
 	router.PathPrefix("/docs/").Handler(docsRouter)
-	// router.PathPrefix("/api/").Handler(http.StripPrefix("/api", rest.GetHandler(ctx, logger, host, grpcPort)))
+	router.PathPrefix("/api/").Handler(http.StripPrefix("/api", rest.GetHandler(ctx, logger, host, grpcPort)))
 	router.PathPrefix("/").Handler(http.FileServer(app))
 
 	return router
@@ -145,7 +145,7 @@ func startgRPCServer(
 	ctx context.Context,
 	logger logr.Logger,
 	host, grpcPort string,
-	v1Service *servicev1.LivingRoomService,
+	v1Service *servicev1.CouchConnectionsService,
 	authenticator *auth.TokenAuthenticator) *ggrpc.Server {
 	// Only the gRPC server needs a different port, but as it is only internal it doesn't matter.
 	listener, err := net.Listen("tcp", host+":"+grpcPort)

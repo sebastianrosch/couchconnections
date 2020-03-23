@@ -8,7 +8,7 @@ import (
 	v1 "github.com/sebastianrosch/couchconnections/rpc/couchconnections-api/v1"
 )
 
-type LivingRoomService struct {
+type CouchConnectionsService struct {
 }
 
 // ------------------
@@ -16,7 +16,7 @@ type LivingRoomService struct {
 // ------------------
 
 // GetVersion returns the service version.
-func (s *LivingRoomService) GetVersion(ctx context.Context, req *empty.Empty) (*v1.Version, error) {
+func (s *CouchConnectionsService) GetVersion(ctx context.Context, req *empty.Empty) (*v1.Version, error) {
 	buildInfo := buildinfo.NewDefaultBuildInfo()
 
 	return &v1.Version{

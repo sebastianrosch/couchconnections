@@ -9,6 +9,7 @@ COPY . .
 RUN make build VERSION=$BUILD_VERSION
 
 FROM debian
+RUN apt-get update -y && apt-get -y install ca-certificates
 
 WORKDIR /app
 COPY --from=builder /go/src/github.com/sebastianrosch/couchconnections/couchconnections-api /couchconnections-api
